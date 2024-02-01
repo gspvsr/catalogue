@@ -11,16 +11,16 @@ pipeline {
                 echo 'unit testing is done here'
             }
         }
-        // Run SonarScanner with the fetched configuration file
-        stage('Sonar Scan') {
+        // // Run SonarScanner with the fetched configuration file
+        // stage('Sonar Scan') {
+        //     steps {
+        //         sh 'ls -ltr'
+        //         sh 'sonar-scanner'
+        //     }
+        // }
+        stage('Build') {
             steps {
                 sh 'ls -ltr'
-                sh 'sonar-scanner'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                echo "Deployment"
             }
         }
     }
