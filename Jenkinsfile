@@ -1,9 +1,5 @@
 pipeline {
-    agent {
-        node {
-            label 'Agent-1'
-        }
-    }
+    agent {node { label 'Agent-1'}}
     stages {
         stage('Install dependencies') {
             steps {
@@ -15,15 +11,10 @@ pipeline {
                 echo 'unit testing is done here'
             }
         }
-        stage('Fetch SonarQube Configuration') {
-            steps {
-                // Fetch the SonarQube configuration file from your repository
-                sh 'git checkout sonar-project.properties'
-            }
-        }
+        // Run SonarScanner with the fetched configuration file
         stage('Sonar Scan') {
             steps {
-                // Run SonarScanner with the fetched configuration file
+                sh 'ls -ltr'
                 sh 'sonar-scanner'
             }
         }
