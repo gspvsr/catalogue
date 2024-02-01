@@ -8,11 +8,11 @@ pipeline {
         }
         stage('Unit test') {
             steps {
-                echo 'unit testing is done here.'
+                echo 'unit testing is done here'
             }
         }
         //sonar-scanner command expect sonar-project.properties should be available
-        stage('sonar scan') {
+        stage('Sonar Scan') {
             steps {
                 sh 'sonar-scanner'
             }
