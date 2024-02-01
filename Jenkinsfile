@@ -27,5 +27,10 @@ pipeline {
                 sh 'sonar-scanner'
             }
         }
+        stage('Deploy') {
+            steps {
+                echo "Deployment"
+            }
+        }
     }
 }
