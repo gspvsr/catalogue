@@ -6,7 +6,7 @@ pipeline {
                 script{
                     def packageJson = readJSON file: 'package.json'
                     def packageVersion = packageJson.version
-                    echo "${packageJson.version}"
+                    echo "version: ${packageVersion}"
                 }
             }
         }
@@ -39,27 +39,27 @@ pipeline {
             }
         }
 
-    //     //instrall pipeline utility steps plugin, if not installed
-    //     stage('Publish Artifact') {
-    //         steps {
-    //             nexusArtifactUploader(
-    //                 nexusVersion: 'nexus3',
-    //                 protocol: 'http',
-    //                 nexusUrl: '172.31.7.125:8081/',
-    //                 groupId: 'com.roboshop',
-    //                 version: '1.0.3',
-    //                 repository: 'catalogue',
-    //                 credentialsId: 'nexus-auth',
-    //                 artifacts: [
-    //                     [artifactId: 'catalogue',
-    //                     classifier: '',
-    //                     file: 'catalogue.zip',
-    //                     type: 'zip']
-    //                 ]
-    //             )
-    //         }
-    //     }
-    // }
+        //instrall pipeline utility steps plugin, if not installed
+        stage('Publish Artifact') {
+            steps {
+                nexusArtifactUploader(
+                    nexusVersion: 'nexus3',
+                    protocol: 'http',
+                    nexusUrl: '172.31.7.125:8081/',
+                    groupId: 'com.roboshop',
+                    version: '1.0.3',
+                    repository: 'catalogue',
+                    credentialsId: 'nexus-auth',
+                    artifacts: [
+                        [artifactId: 'catalogue',
+                        classifier: '',
+                        file: 'catalogue.zip',
+                        type: 'zip']
+                    ]
+                )
+            }
+        }
+    }
     post {
         always {
             echo 'cleaning up workspace'
