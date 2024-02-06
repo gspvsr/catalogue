@@ -24,6 +24,7 @@ const expLogger = expPino({
 });
 
 // MongoDB
+// Actually, this is done by develpers, But to reflect we are adding some content and imagine this extra feature 
 var db;
 var collection;
 var mongoConnected = false;
