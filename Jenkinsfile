@@ -1,6 +1,19 @@
 pipeline {
     agent {node { label 'Agent-1'}}
+    environment
+    //here if you create any variable you will have global access, since it is environment no need of def
+    packageVersion = stop on 37:06
+
     stages {
+        stage ('Get version'){
+            steps {
+                script{
+                    def packageJson = readJSON file: 'package.json'
+                    def packageVersion = packageJson.version
+                    echo "version: ${packageVersion}"
+                }
+            }
+        }
         stage('Install dependencies') {
             steps {
                 sh 'npm install'
@@ -11,13 +24,12 @@ pipeline {
                 echo 'unit testing is done here'
             }
         }
-        // // Run SonarScanner with the fetched configuration file
-        // stage('Sonar Scan') {
-        //     steps {
-        //         sh 'ls -ltr'
-        //         sh 'sonar-scanner'
-        //     }
-        // }
+        // Run SonarScanner with the fetched configuration file
+        stage('Sonar Scan') {
+            steps {
+                echo 'sonar scan done'
+            }
+        }
         stage('Build') {
             steps {
                 sh 'ls -ltr'
@@ -25,27 +37,33 @@ pipeline {
             }
         }
 
-        stage('Publish Artifact') {
+        stage('SAST') {
             steps {
-                nexusArtifactUploader(
-                    nexusVersion: 'nexus3',
-                    protocol: 'http',
-                    nexusUrl: '44.215.110.249:8081',
-                    groupId: 'com.roboshop',
-                    version: '1.0.2',
-                    repository: 'catalogue',
-                    credentialsId: 'nexus-auth',
-                    artifacts: [
-                        [artifactId: 'catalogue',
-                        classifier: '',
-                        file: 'catalogue.zip',
-                        type: 'zip']
-                    ]
-                )
+                echo "SAST done"
             }
         }
-    
-    }
+
+    //     //instrall pipeline utility steps plugin, if not installed
+    //     stage('Publish Artifact') {
+    //         steps {
+    //             nexusArtifactUploader(
+    //                 nexusVersion: 'nexus3',
+    //                 protocol: 'http',
+    //                 nexusUrl: '172.31.7.125:8081/',
+    //                 groupId: 'com.roboshop',
+    //                 version: '1.0.3',
+    //                 repository: 'catalogue',
+    //                 credentialsId: 'nexus-auth',
+    //                 artifacts: [
+    //                     [artifactId: 'catalogue',
+    //                     classifier: '',
+    //                     file: 'catalogue.zip',
+    //                     type: 'zip']
+    //                 ]
+    //             )
+    //         }
+    //     }
+    // }
     post {
         always {
             echo 'cleaning up workspace'
