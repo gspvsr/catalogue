@@ -71,7 +71,8 @@ pipeline {
                     def params = [
                         string(name: 'version', value: "${packageVersion}")
                     ]
-                    build job: '../catalogue-deploy', wait: true, parameters: params
+                    build job: '../catalogue-deploy', wait: true, parameters: params // Use the job name, not relative path
+                }
             }
         }
     }
@@ -79,7 +80,7 @@ pipeline {
     post {
         always {
             echo 'cleaning up workspace'
-            //deleteDir()
+            // deleteDir()
         }
     }
 }
