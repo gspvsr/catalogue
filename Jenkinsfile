@@ -42,27 +42,27 @@ pipeline {
         }
     }
 
-    //     //install pipeline utility steps plugin, if not installed
-    //     stage('Publish Artifact') {
-    //         steps {
-    //             nexusArtifactUploader(
-    //                 nexusVersion: 'nexus3',
-    //                 protocol: 'http',
-    //                 nexusUrl: '172.31.7.125:8081/',
-    //                 groupId: 'com.roboshop',
-    //                 version: '1.0.3',
-    //                 repository: 'catalogue',
-    //                 credentialsId: 'nexus-auth',
-    //                 artifacts: [
-    //                     [artifactId: 'catalogue',
-    //                     classifier: '',
-    //                     file: 'catalogue.zip',
-    //                     type: 'zip']
-    //                 ]
-    //             )
-    //         }
-    //     }
-    // }
+        //install pipeline utility steps plugin, if not installed
+        stage('Publish Artifact') {
+            steps {
+                nexusArtifactUploader(
+                    nexusVersion: 'nexus3',
+                    protocol: 'http',
+                    nexusUrl: '172.31.11.142:8081/',
+                    groupId: 'com.roboshop',
+                    version: "$packageVersion",
+                    repository: 'catalogue',
+                    credentialsId: 'nexus-auth',
+                    artifacts: [
+                        [artifactId: 'catalogue',
+                        classifier: '',
+                        file: 'catalogue.zip',
+                        type: 'zip']
+                    ]
+                )
+            }
+        }
+    }
     post {
         always {
             echo 'cleaning up workspace'
