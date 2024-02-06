@@ -30,6 +30,7 @@ pipeline {
                 echo 'sonar scan done'
             }
         }
+
         stage('Build') {
             steps {
                 sh 'ls -ltr'
@@ -43,7 +44,7 @@ pipeline {
             }
         }
 
-    //     //instrall pipeline utility steps plugin, if not installed
+    //     //install pipeline utility steps plugin, if not installed
     //     stage('Publish Artifact') {
     //         steps {
     //             nexusArtifactUploader(
