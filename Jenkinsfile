@@ -77,6 +77,15 @@ pipeline {
         }
     }
 
+    stages {
+        stage ('Init'){
+            sh """
+            cd terraform
+
+            """
+        }
+    }
+
     post {
         always {
             echo 'cleaning up workspace'
