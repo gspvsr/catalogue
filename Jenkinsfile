@@ -61,11 +61,10 @@ pipeline {
                 )
             }
         }
-    }
+    
     
     // here i need to configure downstream job. I have to pass package version for deployment
     // This job will wait untill  downstream job is over
-    stages {
         stage('Deploy') {
             steps {
                 script{
