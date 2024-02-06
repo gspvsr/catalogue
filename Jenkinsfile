@@ -10,6 +10,7 @@ pipeline {
                 script{
                     def packageJson = readJSON(file: 'package.json')
                     def packageVersion = packageJson.version
+                    echo "version: ${packageVersion}"
                 }
             }
         }
@@ -40,7 +41,7 @@ pipeline {
         stage('SAST') {
             steps {
                 echo "SAST done"
-                echo "version: ${packageVersion}"
+                echo "package version: $packageVersion"
             }
         }
     }
