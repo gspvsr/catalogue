@@ -70,7 +70,7 @@ pipeline {
                     def params = [
                         string(name: 'version', value: "${packageVersion}")
                     ]
-                    build job: 'catalogue-deploy', wait: true, parameters: params // Use the job name, not relative path
+                    build job: '../catalogue-deploy', wait: true, parameters: params // Use the job name, not relative path
                 }
             }
         }
