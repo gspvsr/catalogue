@@ -1,12 +1,16 @@
 pipeline {
     agent {node { label 'Agent-1'}}
+    //here if you create any variable you will have global access, since it is environment
+    environment{
+        packageVersion = ''
+    }
     stages {
         stage ('Get version'){
             steps {
                 script{
-                    def packageJson = readJSON file: 'package.json'
+                    def packageJson = readJSON(file: 'package.json')
                     def packageVersion = packageJson.version
-                    echo "${packageVersion}"
+                    echo "version:${packageVersion}"
                 }
             }
         }
@@ -37,6 +41,7 @@ pipeline {
         stage('SAST') {
             steps {
                 echo "SAST done"
+                echo "version:${packageVersion}"
             }
         }
     }
