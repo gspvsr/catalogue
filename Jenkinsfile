@@ -63,17 +63,15 @@ pipeline {
         }
     
     
-    // here i need to configure downstream job. I have to pass package version for deployment
-    // This job will wait untill  downstream job is over
-        stage('Deploy') {
-            steps {
-                script{
+    // This job will wait until the downstream job is over
+    stage('Deploy') {
+        steps {
+            script {
                 echo "Deploying"
                 def params = [
-                    string(name:'version', value: ${packageVersion} )
+                    string(name: 'version', value: "${packageVersion}")
                 ]
-                build job: "../catalogue-deploy", wait: true, parameters: params
-                }
+            build job: "../catalogue-deploy", wait: true, parameters: params
             }
         }
     }
