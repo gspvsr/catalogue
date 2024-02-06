@@ -1,14 +1,15 @@
 pipeline {
     agent { node { label 'Agent-1' } }
+    //here if you create any variable you will have global access, since it is environment no need of def
     environment {
-        packageVersion = '' // Initialize the packageVersion variable
+        packageVersion = '' 
     }
     stages {
         stage('Get version') {
             steps {
                 script {
                     def packageJson = readJSON file: 'package.json'
-                    packageVersion = packageJson.version // Assign the value to the environment variable
+                    packageVersion = packageJson.version 
                     echo "version: ${packageVersion}"
                 }
             }
@@ -31,12 +32,12 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'ls -ltr'
-                sh 'zip -r catalogue.zip ./* --exclude=.git --exclude=catalogue.zip'
+                sh 'zip -r catalogue.zip ./* --exclude=.git --exclude=.zip'
             }
         }
         stage('SAST') {
             steps {
-                echo "SAST done"
+                echo "SAST Done"
                 echo "package version: $packageVersion"
             }
         }
@@ -66,12 +67,11 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    echo "Deploying"
+                    echo "Deployment"
                     def params = [
                         string(name: 'version', value: "${packageVersion}")
                     ]
-                    build job: '../catalogue-deploy', wait: true, parameters: params // Use the job name, not relative path
-                }
+                    build job: '../catalogue-deploy', wait: true, parameters: params
             }
         }
     }
@@ -79,7 +79,7 @@ pipeline {
     post {
         always {
             echo 'cleaning up workspace'
-            deleteDir()
+            //deleteDir()
         }
     }
 }
