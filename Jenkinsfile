@@ -40,7 +40,6 @@ pipeline {
                 echo "package version: $packageVersion"
             }
         }
-    }
 
         //install pipeline utility steps plugin, if not installed
         stage('Publish Artifact') {
@@ -63,6 +62,7 @@ pipeline {
             }
         }
     }
+
     post {
         always {
             echo 'cleaning up workspace'
