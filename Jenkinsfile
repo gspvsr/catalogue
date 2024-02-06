@@ -41,13 +41,13 @@ pipeline {
             }
         }
 
-        //install pipeline utility steps plugin, if not installed
+        // Install the pipeline utility steps plugin if not installed
         stage('Publish Artifact') {
             steps {
                 nexusArtifactUploader(
                     nexusVersion: 'nexus3',
                     protocol: 'http',
-                    nexusUrl: '172.31.11.142:8081/',
+                    nexusUrl: 'http://172.31.11.142:8081/', // Add http:// here
                     groupId: 'com.roboshop',
                     version: "$packageVersion",
                     repository: 'catalogue',
@@ -62,7 +62,6 @@ pipeline {
             }
         }
     
-    
         // This job will wait until the downstream job is over
         stage('Deploy') {
             steps {
@@ -71,16 +70,16 @@ pipeline {
                     def params = [
                         string(name: 'version', value: "${packageVersion}")
                     ]
-                build job: "../catalogue-deploy", wait: true, parameters: params
+                    build job: 'catalogue-deploy', wait: true, parameters: params // Use the job name, not relative path
                 }
             }
         }
+    }
 
-        post {
-            always {
-                echo 'cleaning up workspace'
-                deleteDir()
-            }
+    post {
+        always {
+            echo 'cleaning up workspace'
+            deleteDir()
         }
     }
 }
