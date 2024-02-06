@@ -63,23 +63,24 @@ pipeline {
         }
     
     
-    // This job will wait until the downstream job is over
-    stage('Deploy') {
-        steps {
-            script {
-                echo "Deploying"
-                def params = [
-                    string(name: 'version', value: "${packageVersion}")
-                ]
-            build job: "../catalogue-deploy", wait: true, parameters: params
+        // This job will wait until the downstream job is over
+        stage('Deploy') {
+            steps {
+                script {
+                    echo "Deploying"
+                    def params = [
+                        string(name: 'version', value: "${packageVersion}")
+                    ]
+                build job: "../catalogue-deploy", wait: true, parameters: params
+                }
             }
         }
-    }
 
-    post {
-        always {
-            echo 'cleaning up workspace'
-            deleteDir()
+        post {
+            always {
+                echo 'cleaning up workspace'
+                deleteDir()
+            }
         }
     }
 }
