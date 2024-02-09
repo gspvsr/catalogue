@@ -1,32 +1,33 @@
 pipeline {
-    agent { node { label 'Agent-1' } }
-    //here if you create any variable you will have global access, since it is environment no need of def
-    environment {
-        packageVersion = '' 
+    agent { node { label 'AGENT-1' } }
+    environment{
+        //here if you create any variable you will have global access, since it is environment no need of def
+        packageVersion = ''
     }
     stages {
-        stage('Get version') {
-            steps {
-                script {
-                    def packageJson = readJSON file: 'package.json'
-                    packageVersion = packageJson.version 
+        stage('Get version'){
+            steps{
+                script{
+                    def packageJson = readJSON(file: 'package.json')
+                    packageVersion = packageJson.version
                     echo "version: ${packageVersion}"
                 }
             }
         }
-        stage('Install dependencies') {
+        stage('Install depdencies') {
             steps {
                 sh 'npm install'
             }
         }
         stage('Unit test') {
             steps {
-                echo 'unit testing is done here'
+                echo "unit testing is done here"
             }
         }
+        //sonar-scanner command expect sonar-project.properties should be available
         stage('Sonar Scan') {
             steps {
-                echo 'sonar scan done'
+                echo "Sonar scan done"
             }
         }
         stage('Build') {
@@ -41,14 +42,13 @@ pipeline {
                 echo "package version: $packageVersion"
             }
         }
-
-        // Install the pipeline utility steps plugin if not installed
+        //install pipeline utility steps plugin, if not installed
         stage('Publish Artifact') {
             steps {
                 nexusArtifactUploader(
                     nexusVersion: 'nexus3',
                     protocol: 'http',
-                    nexusUrl: '172.31.11.142:8081/', // Add http:// here
+                    nexusUrl: '172.31.86.20:8081/',
                     groupId: 'com.roboshop',
                     version: "$packageVersion",
                     repository: 'catalogue',
@@ -62,25 +62,26 @@ pipeline {
                 )
             }
         }
-    
-        // This job will wait until the downstream job is over
+
+        //here I need to configure downstram job. I have to pass package version for deployment
+        // This job will wait until downstrem job is over
         stage('Deploy') {
             steps {
-                script {
+                script{
                     echo "Deployment"
                     def params = [
-                        string(name: 'version', value: "${packageVersion}")
+                        string(name: 'version', value: "$packageVersion")
                     ]
-                    build job: '../catalogue-deploy', wait: true, parameters: params // Use the job name, not relative path
+                    build job: "../catalogue-deploy", wait: true, parameters: params
                 }
             }
         }
     }
-    
-    post {
-        always {
+
+    post{
+        always{
             echo 'cleaning up workspace'
-            // deleteDir()
+            //deleteDir()
         }
     }
 }
