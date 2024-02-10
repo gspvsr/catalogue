@@ -8,4 +8,4 @@ def configMap = [
 ]
 
 // this is .groovy file name and function inside it.
-pipelinedecission.decidePipline(configMap)
+pipelineDecission.decidePipeline(configMap)
