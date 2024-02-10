@@ -1,3 +1,3 @@
 #!groovy
-@Library('roboshop-library')
+@Library('roboshop-shared-library')
 nodeJSVMCI
