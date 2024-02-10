@@ -1,6 +1,6 @@
 #!groovy
-// it means the libraries will be downloaded and acceesible at run time as like we develop
-@Library('roboshop-shared-library')
+// it means the libraries will be downloaded and accessible at run time
+@Library('roboshop-shared-library') _
 
 def configMap = [
     application: "nodeJSVM",
@@ -8,4 +8,4 @@ def configMap = [
 ]
 
 // this is .groovy file name and function inside it.
-pipelineDecision.decidePipeline(configMap)
+pipelineDecission.decidePipleine(configMap)
