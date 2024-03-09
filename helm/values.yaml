@@ -1,4 +1,4 @@
 deployment:
-    imageVersion: IMAGE_VERSION
+  imageVersion: IMAGE_VERSION
 hpa:
-    utilization: 75
+  utilisation: 75
