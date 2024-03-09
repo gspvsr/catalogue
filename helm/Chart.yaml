@@ -1,0 +1,5 @@
+apiVersion: v2
+name: catalogue
+version: 0.0.1 # This is the chart version
+description: this is the helm chart of nginx
+appVersion: "1.0.0" # this app version
