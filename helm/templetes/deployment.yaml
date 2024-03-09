@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: catalogue
-        image: "joindevops/catalogue:{{ .Values.deployment.imageVersion }}"
+        image: "gspvsr/catalogue:{{ .Values.deployment.imageVersion }}"
         resources:
           requests:
             cpu: "50m"
