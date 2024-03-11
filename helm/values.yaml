@@ -1,4 +1,4 @@
 deployment:
-  imageVersion: "1.0.0"
+  imageVersion: "1.0.1"
 hpa:
   utilisation: 75
